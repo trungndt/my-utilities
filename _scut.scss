@@ -1,0 +1,83 @@
+﻿/*============================================================================
+  #General Variables
+==============================================================================*/
+// Radius
+$radius: 2px;
+
+// Header text
+$headerText: 16px;
+
+// Color set
+$red: #f44336;
+$green: #00AA41;
+$blue: #0773BB;
+$gray: #4c4c4c;
+
+$colorMain: $blue;
+$colorMainDarken: darken($colorMain, 5%);
+$colorMainLighten: lighten($colorMain, 10%);
+
+$colorPrimary: $blue;
+$colorPrimaryHover: darken($colorPrimary, 5%);
+
+$colorDanger: $red;
+$colorDangerHover: darken($colorDanger, 5%);
+
+$colorDefault: $gray;
+$colorDefaultHover: darken($colorDefault, 5%);
+
+$colorSecondary: #FFF20D;
+$colorTextInverse: #fff;
+
+/*============================================================================
+  #Mixin
+==============================================================================*/
+@mixin prefix($property, $value) {
+    -webkit-#{$property}: #{$value};
+    -moz-#{$property}: #{$value};
+    -ms-#{$property}: #{$value};
+    -o-#{$property}: #{$value};
+    #{$property}: #{$value};
+}
+
+@mixin transition($transition: 0.1s all) {
+    @include prefix('transition', #{$transition});
+}
+
+@mixin gradient($from, $to, $fallback) {
+    background: $fallback;
+    background: -moz-linear-gradient(top, $from 0, $to 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0,$from), color-stop(100%,$to));
+    background: -webkit-linear-gradient(top, $from 0,$to 100%);
+    background: -o-linear-gradient(top, $from 0,$to 100%);
+    background: -ms-linear-gradient(top, $from 0,$to 100%);
+    background: linear-gradient(top bottom, $from 0,$to 100%);
+}
+
+@function color-control($color) {
+    @if (lightness( $color ) > 48) {
+        @return $headerText;
+    }
+    @else {
+        @return #fff;
+    }
+}
+
+/*============================================================================
+  #Render Helping classes
+==============================================================================*/
+
+$minSpace: 1;
+$maxSpace: 6;
+$clsTypes: ('m':'margin', 'p':'padding');
+$directions: ( 't':'top', 'r':'right', 'b':'bottom', 'l':'left');
+
+@each $tKey, $tVal in $clsTypes {
+    @each $dKey, $dVal in $directions {
+        @for $i from $minSpace through $maxSpace {
+            .#{$tKey}#{$dKey}-#{$i*5} {
+                #{$tVal}-#{$dVal}: $i * 5px;
+            }
+        }
+    }
+}
